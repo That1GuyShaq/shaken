@@ -17,32 +17,20 @@
 Shaken is a cocktail recipe app designed for mixologists of all skill levels. Users can create, store, and manage their recipes while receiving AI-powered cocktail suggestions based on their inventory.
 
 ## Features
-
-
 - Recipe creation and management. 
-- - Ingredient inventory tracking. 
-- - AI-powered cocktail suggestions. 
-- - Advanced filtering and search options.
+- Ingredient inventory tracking. 
+- AI-powered cocktail suggestions. 
+- Advanced filtering and search options.
 
-## Laravel Sponsors
+## Installation 
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
 
-### Premium Partners
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/shaken.git 
+cd shaken
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
 
 ## Contributing
 
@@ -60,6 +48,6 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEyOTg2MjgzODMsMTUxODI2NTI4MiwtOT
+eyJoaXN0b3J5IjpbLTEwNjUxOTkyNzQsMTUxODI2NTI4MiwtOT
 k2ODExODg5XX0=
 -->
