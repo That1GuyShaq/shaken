@@ -30,6 +30,9 @@ Shaken is a cocktail recipe app designed for mixologists of all skill levels. Us
 git clone https://github.com/yourusername/shaken.git 
 cd shaken
 ```
+2. Install Dependencies
+3. Configure ```.env``` file:
+4. Setup Database:
 
 
 ## Contributing
@@ -48,6 +51,6 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEwNjUxOTkyNzQsMTUxODI2NTI4MiwtOT
+eyJoaXN0b3J5IjpbLTE3MTAwMTQ2ODYsMTUxODI2NTI4MiwtOT
 k2ODExODg5XX0=
 -->
