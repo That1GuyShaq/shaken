@@ -26,13 +26,23 @@ Shaken is a cocktail recipe app designed for mixologists of all skill levels. Us
 
 
 1. Clone the repository:
-```bash
-git clone https://github.com/yourusername/shaken.git 
-cd shaken
-```
+	```bash
+	git clone https://github.com/yourusername/shaken.git 
+	cd shaken
+	```
 2. Install Dependencies
+	```bash
+	composer install 
+	npm install
+	```
 3. Configure ```.env``` file:
+	```bash
+	cp .env.example .env
+	```
 4. Setup Database:
+	```bash
+	php artisan migrate
+	```
 
 
 ## Contributing
@@ -51,6 +61,6 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE3MTAwMTQ2ODYsMTUxODI2NTI4MiwtOT
-k2ODExODg5XX0=
+eyJoaXN0b3J5IjpbNDA0NjY1MDU5LDE1MTgyNjUyODIsLTk5Nj
+gxMTg4OV19
 -->
