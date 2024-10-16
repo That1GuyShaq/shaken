@@ -49,18 +49,11 @@ Shaken is a cocktail recipe app designed for mixologists of all skill levels. Us
 
 Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
 ## Security Vulnerabilities
 
 If you discover a security vulnerability within Shaken, please send an e-mail to Iktaro Solutions via [bugs@iktaros.com](mailto:bugs@iktaros.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Shaken is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbOTI5OTU4ODgxLDQwNDY2NTA1OSwxNTE4Mj
-Y1MjgyLC05OTY4MTE4ODldfQ==
+eyJoaXN0b3J5IjpbLTM1OTM4MDMwOCw5Mjk5NTg4ODEsNDA0Nj
+Y1MDU5LDE1MTgyNjUyODIsLTk5NjgxMTg4OV19
 -->
