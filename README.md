@@ -55,12 +55,12 @@ In order to ensure that the Laravel community is welcoming to all, please review
 
 ## Security Vulnerabilities
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+If you discover a security vulnerability within Shaken, please send an e-mail to Iktaro Solutions via [bugs@iktaros.com](mailto:bugs@iktaros.com). All security vulnerabilities will be promptly addressed.
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+The Shaken is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNDA0NjY1MDU5LDE1MTgyNjUyODIsLTk5Nj
-gxMTg4OV19
+eyJoaXN0b3J5IjpbOTI5OTU4ODgxLDQwNDY2NTA1OSwxNTE4Mj
+Y1MjgyLC05OTY4MTE4ODldfQ==
 -->
