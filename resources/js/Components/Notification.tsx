@@ -13,7 +13,7 @@ const Notification: React.FC<NotificationProps> = ({ body, trigger }) => {
     if (trigger) {
       toast({
         description: body,
-        className: "w-30 top-0 right-1/2 transform translate-x-1/2 fixed p-2 mt-4 z-50",
+        className: "w-30 top-0 right-1/2 transform translate-x-1/2 fixed px-auto py-3 mt-4 z-50",
         duration: 5000
       });
     }

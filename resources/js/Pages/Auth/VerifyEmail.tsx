@@ -18,7 +18,7 @@ export default function VerifyEmail({ status }: { status?: string }) {
         <GuestLayout>
             <Head title="Email Verification" />
             <Notification body={'A new verification link has been sent to the email address you provided during registration.'} trigger={status === 'verification-link-sent'} />
-            <Card className="pt-6 w-100 border-0">
+            <Card className="p-4 w-100">
                 <CardContent className='p-0'>
                     <div className="mb-4 text-sm">
                         Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn't receive the email, we will gladly send you another.

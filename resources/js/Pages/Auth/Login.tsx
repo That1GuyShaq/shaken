@@ -7,8 +7,8 @@ import { Input } from "@/Components/ui/input";
 import { Label } from "@/Components/ui/label";
 import { Button } from "@/Components/ui/button";
 import { Checkbox } from '@/Components/ui/checkbox';
-
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, } from "@/Components/ui/card";
+
 export default function Login() {
     const { data, setData, post, processing, errors, reset } = useForm({
         email: '',

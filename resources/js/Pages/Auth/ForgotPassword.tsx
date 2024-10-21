@@ -22,7 +22,7 @@ export default function ForgotPassword() {
     return (
         <GuestLayout>
             <Head title="Forgot Password" />
-            <Card className="pt-6 w-100 border-0">
+            <Card className="p-4  w-100">
                 <CardContent>
                     <div className="text-sm">
                     Forgot your password? No problem. Just let us know your email address and we will email you a password

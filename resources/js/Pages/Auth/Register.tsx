@@ -91,7 +91,7 @@ export default function Register() {
                 </CardContent>
                 <CardFooter className="flex justify-end">
                     <Button variant="link" disabled={processing} asChild>
-                        <Link href={route('login')} method="post">Already Registered?</Link>
+                        <Link href={route('login')}>Already Registered?</Link>
                     </Button>
 
                     <Button disabled={processing} onClick={submit}>Register</Button>
