@@ -1,7 +1,8 @@
-import { FormEventHandler } from 'react';
+import { PageProps } from '@/types';
+import { FormEventHandler, useEffect } from 'react';
 import GuestLayout from '@/Layouts/GuestLayout';
 import InputError from '@/Components/InputError';
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, Link, useForm} from '@inertiajs/react';
 
 import { Input } from "@/Components/ui/input";
 import { Label } from "@/Components/ui/label";
@@ -11,7 +12,9 @@ import { Checkbox } from '@/Components/ui/checkbox';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/Components/ui/tabs"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, } from "@/Components/ui/card";
 
-export default function Welcome() {
+
+export default function Welcome({ auth }: PageProps<{}>) {
+
     const { data: loginData, setData: setLoginData, post: loginPost, processing: loginProcessing, errors: loginErrors, reset: loginReset } = useForm({
         email: '',
         password: '',

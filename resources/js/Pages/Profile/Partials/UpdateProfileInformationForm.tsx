@@ -1,20 +1,19 @@
+
+import { FormEventHandler } from 'react';
+import TextInput from '@/Components/TextInput';
+import { Transition } from '@headlessui/react';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import { Transition } from '@headlessui/react';
 import { Link, useForm, usePage } from '@inertiajs/react';
-import { FormEventHandler } from 'react';
 
-export default function UpdateProfileInformation({
-    mustVerifyEmail,
-    status,
-    className = '',
-}: {
-    mustVerifyEmail: boolean;
-    status?: string;
-    className?: string;
-}) {
+import { Input } from "@/Components/ui/input";
+import { Label } from "@/Components/ui/label";
+import { Button } from "@/Components/ui/button";
+import Notification from '@/Components/Notification';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, } from "@/Components/ui/card";
+
+export default function UpdateProfileInformation({ mustVerifyEmail, status, className = '', }: { mustVerifyEmail: boolean; status?: string; className?: string; }) {
     const user = usePage().props.auth.user;
 
     const { data, setData, patch, errors, processing, recentlySuccessful } =
@@ -31,17 +30,60 @@ export default function UpdateProfileInformation({
 
     return (
         <section className={className}>
-            <header>
-                <h2 className="text-lg font-medium text-gray-900">
-                    Profile Information
-                </h2>
+            {/* <Card>
+                <CardHeader>
+                    <CardTitle> Profile Information </CardTitle>
+                    <CardDescription> Update your account's profile information and email address. </CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <form onSubmit={submit}>
+                        <div className="grid w-full items-center gap-4">
+                            <div className="flex flex-col space-y-1.5">
+                            <Label htmlFor="email">Email</Label>
+                            <Input
+                                id="email"
+                                type="email"
+                                name="email"
+                                value={data.email}
+                                autoComplete="username"
+                                onChange={(e) => setData('email', e.target.value)} />
 
-                <p className="mt-1 text-sm text-gray-600">
-                    Update your account's profile information and email address.
-                </p>
+                                <InputError message={errors.email} className="mt-2" />
+                            </div>
+
+                            <div className="block mt-4">
+
+                            </div>
+                        </div>
+                    </form>
+                </CardContent>
+                <CardFooter className="flex justify-end">
+                    <Button variant="link" disabled={processing} asChild>
+                        <Link href={route('password.request')}>Forgot your password?</Link>
+                    </Button>
+                    <Button disabled={processing} onClick={submit}>Log in</Button>
+                </CardFooter>
+            </Card> */}
+            <header>
+                <h2 className="text-lg font-medium"> Profile Information </h2>
+                <p className="mt-1 text-sm"> Update your account's profile information and email address. </p>
             </header>
 
             <form onSubmit={submit} className="mt-6 space-y-6">
+                <div className="grid w-full items-center gap-4">
+                    <div className="flex flex-col space-y-1.5">
+                    <Label htmlFor="email">Email</Label>
+                    <Input
+                        id="email"
+                        type="email"
+                        name="email"
+                        value={data.email}
+                        autoComplete="username"
+                        onChange={(e) => setData('email', e.target.value)} />
+
+                        <InputError message={errors.email} className="mt-2" />
+                    </div>
+                </div>
                 <div>
                     <InputLabel htmlFor="name" value="Name" />
 
@@ -87,13 +129,7 @@ export default function UpdateProfileInformation({
                                 Click here to re-send the verification email.
                             </Link>
                         </p>
-
-                        {status === 'verification-link-sent' && (
-                            <div className="mt-2 text-sm font-medium text-green-600">
-                                A new verification link has been sent to your
-                                email address.
-                            </div>
-                        )}
+                        <Notification body={'A new verification link has been sent to your email address.'} trigger={status === 'verification-link-sent'} />
                     </div>
                 )}
 
