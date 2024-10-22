@@ -182,22 +182,25 @@ import { User } from '@/types';
 import { Toaster } from '@/Components/ui/toaster';
 import { PropsWithChildren, ReactNode } from 'react';
 import { ScrollArea } from '@/Components/ui/scroll-area';
-import Breadcrumbs from '@/Components/Breadcrumbs';
-// import ChatDialog from '@/Components/ChatDialog';
+
 import Topbar from '@/Components/Topbar';
 import Sidebar from '@/Components/Sidebar';
-import  AppSidebar  from '@/Components/AppSidebar';
-import { SidebarProvider, SidebarTrigger } from '@/Components/ui/sidebar';
+// import Breadcrumbs from '@/Components/Breadcrumbs';
+// import ChatDialog from '@/Components/ChatDialog';
 
 
 
 export default function Authenticated({ user, header, children }: PropsWithChildren<{ user: User, header?: ReactNode }>) {
 
     return (
-        <SidebarProvider>
-            <AppSidebar />
-            <main>
-                <SidebarTrigger />
+        <div className='flex h-screen min-h-screen items-start justify-between relative overflow-hidden'>
+            <div className='abosulte top-0 bottom-0'>
+                <Sidebar />
+            </div>
+            <main className='w-full'>
+                    <Topbar user={user} />
+                    {/* <Breadcrumbs title={header} /> */}
+
                 <ScrollArea className='flex h-[90vh]'>
                     <div className='grid grid-cols-12 gap-4 m-4'>
                         {children}
@@ -207,25 +210,6 @@ export default function Authenticated({ user, header, children }: PropsWithChild
 
                 {/* <ChatDialog /> */}
             </main>
-        </SidebarProvider>
-
-        // <div className='flex h-screen min-h-screen items-start justify-between relative overflow-hidden'>
-        //     <div className='abosulte top-0 bottom-0'>
-        //         <Sidebar />
-        //     </div>
-        //     <main className='w-full'>
-        //             <Topbar user={user} />
-        //             <Breadcrumbs title={header} />
-
-        //         <ScrollArea className='flex h-[90vh]'>
-        //             <div className='grid grid-cols-12 gap-4 m-4'>
-        //                 {children}
-        //             </div>
-        //         </ScrollArea>
-        //         <Toaster />
-
-        //         <ChatDialog />
-        //     </main>
-        // </div>
+        </div>
     );
 }
