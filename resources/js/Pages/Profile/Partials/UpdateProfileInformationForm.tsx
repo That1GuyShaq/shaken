@@ -36,7 +36,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, isMobile, cl
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <form className={`grid auto-rows-min gap-4 grid-cols-${isMobile ? '6' : '12'}`}>
+                    <form className={`grid auto-rows-min gap-4 ${isMobile ? 'grid-cols-6' : 'grid-cols-12'}`}>
 
                         <div className='grid w-full items-center gap-1.5 col-span-6'>
                             <Label htmlFor="first_name">First Name</Label>
@@ -66,7 +66,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, isMobile, cl
                             <InputError message={errors.last_name} className="mt-2" />
                         </div>
 
-                        <div className={`grid w-full items-center gap-1.5 col-span-${isMobile ? '6' : '10'}`}>
+                        <div className={`grid w-full items-center gap-1.5 ${isMobile ? 'col-span-6' : 'col-span-10'}`}>
                             <Label htmlFor="email">Email</Label>
                             <Input
                                 id="email"

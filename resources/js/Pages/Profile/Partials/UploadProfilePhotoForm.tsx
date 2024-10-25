@@ -55,7 +55,7 @@ export default function UpdateProfileInformation({ className = '', isMobile, use
             <Card>
                 <CardContent className="pt-6">
                     <div className="grid grid-cols-3 items-center">
-                        <div className={`col-span-${isMobile ? '3' : '2'} items-center flex gap-4`}>
+                        <div className={`${isMobile ? 'col-span-3' : 'col-span-2'} items-center flex gap-4`}>
                             <div className="relative inline-block">
                                 <Avatar className="w-24 h-24 rounded-xl">
                                     <AvatarImage src={profilePhoto} alt={user.first_name + ' ' + user.last_name} />

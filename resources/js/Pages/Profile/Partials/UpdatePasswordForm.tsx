@@ -49,8 +49,8 @@ export default function UpdatePasswordForm({ className = '', isMobile }: {  clas
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <form  className={`grid auto-rows-min gap-4 grid-cols-${isMobile ? '6' : '12'}`}>
-                        <div className={`grid w-full items-center gap-1.5 col-span-${isMobile ? '6' : '12'}`}>
+                    <form  className={`grid auto-rows-min gap-4 ${isMobile ? 'grid-cols-6' : 'grid-cols-12'}`}>
+                        <div className={`grid w-full items-center gap-1.5 ${isMobile ? 'col-span-6' : 'col-span-12'}`}>
                             <Label htmlFor="current_password">Current Password</Label>
                             <Input
                                 id="current_password"

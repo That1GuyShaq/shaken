@@ -39,7 +39,7 @@ export default function Edit({ mustVerifyEmail, status, auth }: PageProps<{ must
 
             <Notification body={body} trigger={trigger} />
 
-            <div className={`grid auto-rows-min gap-4 grid-cols-${isMobile ? '3' : '5'}`} >
+            <div className={`grid auto-rows-min gap-4 ${isMobile ? 'grid-cols-3' : 'grid-cols-5'}`} >
                 <UploadProfilePhotoForm
                     className={`col-span-3 ${isMobile ? 'col-start-0' : 'col-start-2'}`}
                     isMobile={isMobile}
