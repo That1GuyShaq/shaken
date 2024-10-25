@@ -1,24 +1,64 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+
 import { PageProps } from '@/types';
 import { Head } from '@inertiajs/react';
+import { useState, useEffect } from 'react';
+import { useIsMobile } from "@/hooks/use-mobile";
+import Notification from '@/Components/Notification';
 import DeleteUserForm from './Partials/DeleteUserForm';
 import UpdatePasswordForm from './Partials/UpdatePasswordForm';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import UploadProfilePhotoForm from './Partials/UploadProfilePhotoForm';
 import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm';
 
 export default function Edit({ mustVerifyEmail, status, auth }: PageProps<{ mustVerifyEmail: boolean; status?: string }>) {
+    const [trigger, setTrigger] = useState(false);
+    const [body, setBody] = useState('');
+    const isMobile = useIsMobile();
+
+    if (status === 'verification-link-sent') {
+        setTrigger(true);
+        setBody('A new verification link has been sent to your email address.');
+    }else if (status === 'password-updated') {
+        setTrigger(true);
+        setBody(status);
+    }else if (status === 'profile-updated') {
+        setTrigger(true);
+        setBody(status);
+    }else if (status != null) {
+        setTrigger(true);
+        setBody(status);
+    }
+    console.log(status);
 
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Profile</h2>} >
+            header={<h2 className="font-semibold text-xl leading-tight">Profile</h2>} >
 
             <Head title="Profile" />
 
-            <div className='col-span-12 boder-12 border-danger'>
-                <UpdateProfileInformationForm
+            <Notification body={body} trigger={trigger} />
+
+            <div className={`grid auto-rows-min gap-4 grid-cols-${isMobile ? '3' : '5'}`} >
+                <UploadProfilePhotoForm
+                    className={`col-span-3 ${isMobile ? 'col-start-0' : 'col-start-2'}`}
+                    isMobile={isMobile}
+                    user={auth.user}
+                />
+
+                <UpdateProfileInformationForm className={`col-span-3 ${isMobile ? 'col-start-0' : 'col-start-2'}`}
                     mustVerifyEmail={mustVerifyEmail}
-                    status={status}
-                    className="max-w-xl"
+                    isMobile={isMobile}
+                    user={auth.user}
+                    // status={status}
+                />
+
+                <UpdatePasswordForm className={`col-span-3 ${isMobile ? 'col-start-0' : 'col-start-2'}`}
+                    isMobile={isMobile}
+                />
+
+                <DeleteUserForm className={`col-span-3 ${isMobile ? 'col-start-0' : 'col-start-2'}`}
+                    isMobile={isMobile}
                 />
             </div>
             {/* <div className="py-12">

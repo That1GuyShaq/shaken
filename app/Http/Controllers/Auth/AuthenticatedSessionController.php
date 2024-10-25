@@ -49,4 +49,9 @@ class AuthenticatedSessionController extends Controller
 
         return redirect('/');
     }
+
+    public function welcome(): Response
+    {
+        return Inertia::render('Welcome');
+    }
 }

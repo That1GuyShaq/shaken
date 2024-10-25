@@ -5,13 +5,13 @@ import { Head, useForm } from '@inertiajs/react';
 
 import { Input } from "@/Components/ui/input";
 import { Button } from "@/Components/ui/button";
+import Notification from '@/Components/Notification';
 import { Card, CardContent, CardFooter, } from "@/Components/ui/card";
 
-export default function ForgotPassword() {
+export default function ForgotPassword({ status }: { status?: string }) {
     const { data, setData, post, processing, errors } = useForm({
         email: '',
     });
-
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
@@ -22,7 +22,8 @@ export default function ForgotPassword() {
     return (
         <GuestLayout>
             <Head title="Forgot Password" />
-            <Card className="p-4  w-100">
+            { status && <Notification body={status} trigger /> }
+            <Card className="p-4 w-100">
                 <CardContent>
                     <div className="text-sm">
                     Forgot your password? No problem. Just let us know your email address and we will email you a password

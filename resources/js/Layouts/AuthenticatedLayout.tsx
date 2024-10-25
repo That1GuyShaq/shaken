@@ -178,38 +178,50 @@
 //     );
 // }
 
-import { User } from '@/types';
+import { User, App } from '@/types';
+
+import { useIsMobile } from "@/hooks/use-mobile";
+import { Link, usePage } from '@inertiajs/react';
 import { Toaster } from '@/Components/ui/toaster';
 import { PropsWithChildren, ReactNode } from 'react';
-import { ScrollArea } from '@/Components/ui/scroll-area';
 
-import Topbar from '@/Components/Topbar';
-import Sidebar from '@/Components/Sidebar';
-// import Breadcrumbs from '@/Components/Breadcrumbs';
+// import Topbar from '@/Components/Topbar';
+import  AppFooter  from "@/Components/app-footer";
+import  AppTopbar  from "@/Components/app-topbar";
+import  AppSidebar  from "@/Components/app-sidebar";
 // import ChatDialog from '@/Components/ChatDialog';
+// import Breadcrumbs from '@/Components/Breadcrumbs';
+import { Separator } from "@/Components/ui/separator";
+import { SidebarInset, SidebarProvider, SidebarTrigger, } from "@/Components/ui/sidebar";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator, } from "@/Components/ui/breadcrumb";
+
+const app: App = {
+    name: import.meta.env.VITE_APP_NAME,
+    owner: {
+        name: import.meta.env.VITE_APP_OWNER,
+        url: import.meta.env.VITE_APP_OWNER_URL
+    },
+    slogan: import.meta.env.VITE_APP_SLOGAN
+};
 
 
-
-export default function Authenticated({ user, header, children }: PropsWithChildren<{ user: User, header?: ReactNode }>) {
-
+export default function Authenticated({ user, children }: PropsWithChildren<{ user: User, header?: ReactNode }>) {
+    // const isMobile = useIsMobile();
     return (
-        <div className='flex h-screen min-h-screen items-start justify-between relative overflow-hidden'>
-            <div className='abosulte top-0 bottom-0'>
-                <Sidebar />
-            </div>
-            <main className='w-full'>
-                    <Topbar user={user} />
-                    {/* <Breadcrumbs title={header} /> */}
-
-                <ScrollArea className='flex h-[90vh]'>
-                    <div className='grid grid-cols-12 gap-4 m-4'>
-                        {children}
+        <>
+            <SidebarProvider >
+                <AppSidebar app={app} />
+                <SidebarInset>
+                    <AppTopbar user={user} app={app}/>
+                    <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+                        {children }
                     </div>
-                </ScrollArea>
-                <Toaster />
-
-                {/* <ChatDialog /> */}
-            </main>
-        </div>
+                    <Toaster />
+                </SidebarInset>
+            </SidebarProvider>
+           {/* { isMobile &&
+            <AppFooter />
+           } */}
+        </>
     );
 }

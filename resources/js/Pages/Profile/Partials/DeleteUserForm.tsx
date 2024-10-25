@@ -7,118 +7,91 @@ import TextInput from '@/Components/TextInput';
 import { useForm } from '@inertiajs/react';
 import { FormEventHandler, useRef, useState } from 'react';
 
-export default function DeleteUserForm({
-    className = '',
-}: {
-    className?: string;
-}) {
-    const [confirmingUserDeletion, setConfirmingUserDeletion] = useState(false);
+import { User } from "@/types";
+import PrimaryButton from '@/Components/PrimaryButton';
+
+
+import { Loader2 } from "lucide-react";
+import { Input } from "@/Components/ui/input";
+import { Label } from "@/Components/ui/label";
+import { Button } from "@/Components/ui/button";
+import { Card, CardHeader, CardTitle, CardDescription, CardFooter } from "@/Components/ui/card";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "@/Components/ui/dialog";
+
+export default function DeleteUserForm({ className = '', isMobile }: {  className?: string; isMobile: boolean; }) {
+    const { data, setData, delete: destroy, processing, reset, errors, clearErrors } = useForm({ password: '' });
     const passwordInput = useRef<HTMLInputElement>(null);
+    const [dialogIsOpen, setDialogIsOpen] = useState(false)
 
-    const {
-        data,
-        setData,
-        delete: destroy,
-        processing,
-        reset,
-        errors,
-        clearErrors,
-    } = useForm({
-        password: '',
-    });
-
-    const confirmUserDeletion = () => {
-        setConfirmingUserDeletion(true);
-    };
 
     const deleteUser: FormEventHandler = (e) => {
         e.preventDefault();
 
         destroy(route('profile.destroy'), {
             preserveScroll: true,
-            onSuccess: () => closeModal(),
+            onSuccess: () => handleOpenChange(dialogIsOpen),
             onError: () => passwordInput.current?.focus(),
             onFinish: () => reset(),
         });
     };
 
-    const closeModal = () => {
-        setConfirmingUserDeletion(false);
-
-        clearErrors();
-        reset();
+    const handleOpenChange  = (open: boolean) => {
+        setDialogIsOpen(open)
+        if (!open) {
+            clearErrors();
+            reset();
+            console.log('foo');
+        }
     };
 
     return (
         <section className={`space-y-6 ${className}`}>
-            <header>
-                <h2 className="text-lg font-medium text-gray-900">
-                    Delete Account
-                </h2>
+            <Card>
+                <CardHeader>
+                    <CardTitle>Delete Account</CardTitle>
+                    <CardDescription className="text-sm leading-snug">
+                        Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.
+                    </CardDescription>
+                </CardHeader>
+                <CardFooter className="flex items-center justify-end">
+                    <Dialog open={dialogIsOpen} onOpenChange={handleOpenChange}>
+                        <DialogTrigger>
+                            <Button className={isMobile ? 'w-full' : 'w-25'} disabled={dialogIsOpen} variant="destructive">
+                                {dialogIsOpen ? <span className="flex items-center"><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Awaiting Confirmation...</span> : 'Delete Account'}
+                            </Button>
+                        </DialogTrigger>
+                        <DialogContent>
+                            <DialogHeader>
+                            <DialogTitle>Are you sure you want to delete your account?</DialogTitle>
+                            <DialogDescription>
+                                Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.
+                            </DialogDescription>
+                            </DialogHeader>
+                            <form  className="grid auto-rows-min gap-4 w-full">
+                                <div className="grid w-full items-center gap-1.5 col-span-6">
+                                    <Label htmlFor="password">Password</Label>
+                                    <Input
+                                        id="password"
+                                        type="password"
+                                        name="password"
+                                        required
+                                        value={data.password}
+                                        autoComplete="off"
+                                        onChange={(e) => setData('password', e.target.value)} />
 
-                <p className="mt-1 text-sm text-gray-600">
-                    Once your account is deleted, all of its resources and data
-                    will be permanently deleted. Before deleting your account,
-                    please download any data or information that you wish to
-                    retain.
-                </p>
-            </header>
+                                        <InputError message={errors['password']} className="mt-2" />
+                                </div>
+                            </form>
 
-            <DangerButton onClick={confirmUserDeletion}>
-                Delete Account
-            </DangerButton>
-
-            <Modal show={confirmingUserDeletion} onClose={closeModal}>
-                <form onSubmit={deleteUser} className="p-6">
-                    <h2 className="text-lg font-medium text-gray-900">
-                        Are you sure you want to delete your account?
-                    </h2>
-
-                    <p className="mt-1 text-sm text-gray-600">
-                        Once your account is deleted, all of its resources and
-                        data will be permanently deleted. Please enter your
-                        password to confirm you would like to permanently delete
-                        your account.
-                    </p>
-
-                    <div className="mt-6">
-                        <InputLabel
-                            htmlFor="password"
-                            value="Password"
-                            className="sr-only"
-                        />
-
-                        <TextInput
-                            id="password"
-                            type="password"
-                            name="password"
-                            ref={passwordInput}
-                            value={data.password}
-                            onChange={(e) =>
-                                setData('password', e.target.value)
-                            }
-                            className="mt-1 block w-3/4"
-                            isFocused
-                            placeholder="Password"
-                        />
-
-                        <InputError
-                            message={errors.password}
-                            className="mt-2"
-                        />
-                    </div>
-
-                    <div className="mt-6 flex justify-end">
-                        <SecondaryButton onClick={closeModal}>
-                            Cancel
-                        </SecondaryButton>
-
-                        <DangerButton className="ms-3" disabled={processing}>
-                            Delete Account
-                        </DangerButton>
-                    </div>
-                </form>
-            </Modal>
+                            <DialogFooter>
+                                <Button className={isMobile ? 'w-full' : 'w-25'} disabled={processing} onClick={deleteUser} variant="destructive">
+                                    {processing ? <span className="flex items-center"><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Deleting Accout...</span> : 'Confirm Account Deletion'}
+                                </Button>
+                            </DialogFooter>
+                        </DialogContent>
+                    </Dialog>
+                </CardFooter>
+            </Card>
         </section>
     );
 }

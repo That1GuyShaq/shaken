@@ -1,28 +1,19 @@
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import { Transition } from '@headlessui/react';
 import { useForm } from '@inertiajs/react';
+import { Transition } from '@headlessui/react';
+import InputError from '@/Components/InputError';
 import { FormEventHandler, useRef } from 'react';
 
-export default function UpdatePasswordForm({
-    className = '',
-}: {
-    className?: string;
-}) {
+import { Loader2 } from "lucide-react";
+import { Input } from "@/Components/ui/input";
+import { Label } from "@/Components/ui/label";
+import { Button } from "@/Components/ui/button";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/Components/ui/card";
+
+export default function UpdatePasswordForm({ className = '', isMobile }: {  className?: string; isMobile: boolean; }) {
     const passwordInput = useRef<HTMLInputElement>(null);
     const currentPasswordInput = useRef<HTMLInputElement>(null);
 
-    const {
-        data,
-        setData,
-        errors,
-        put,
-        reset,
-        processing,
-        recentlySuccessful,
-    } = useForm({
+    const { data, setData, errors, put, reset,  processing, recentlySuccessful } = useForm({
         current_password: '',
         password: '',
         password_confirmation: '',
@@ -50,84 +41,59 @@ export default function UpdatePasswordForm({
 
     return (
         <section className={className}>
-            <header>
-                <h2 className="text-lg font-medium text-gray-900">
-                    Update Password
-                </h2>
+            <Card>
+                <CardHeader>
+                    <CardTitle>Update Password</CardTitle>
+                    <CardDescription className="text-sm leading-snug">
+                        Ensure your account is using a long, random password to stay secure.
+                    </CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <form  className={`grid auto-rows-min gap-4 grid-cols-${isMobile ? '6' : '12'}`}>
+                        <div className={`grid w-full items-center gap-1.5 col-span-${isMobile ? '6' : '12'}`}>
+                            <Label htmlFor="current_password">Current Password</Label>
+                            <Input
+                                id="current_password"
+                                type="password"
+                                name="current_password"
+                                required
+                                value={data.current_password}
+                                onChange={(e) => setData('current_password', e.target.value)} />
 
-                <p className="mt-1 text-sm text-gray-600">
-                    Ensure your account is using a long, random password to stay
-                    secure.
-                </p>
-            </header>
+                                <InputError message={errors['current_password']} className="mt-2" />
+                        </div>
 
-            <form onSubmit={updatePassword} className="mt-6 space-y-6">
-                <div>
-                    <InputLabel
-                        htmlFor="current_password"
-                        value="Current Password"
-                    />
+                        <div className="grid w-full items-center gap-1.5 col-span-6">
+                            <Label htmlFor="password">New Password</Label>
+                            <Input
+                                id="password"
+                                type="password"
+                                name="password"
+                                required
+                                value={data.password}
+                                onChange={(e) => setData('password', e.target.value)} />
 
-                    <TextInput
-                        id="current_password"
-                        ref={currentPasswordInput}
-                        value={data.current_password}
-                        onChange={(e) =>
-                            setData('current_password', e.target.value)
-                        }
-                        type="password"
-                        className="mt-1 block w-full"
-                        autoComplete="current-password"
-                    />
+                                <InputError message={errors['password']} className="mt-2" />
+                        </div>
 
-                    <InputError
-                        message={errors.current_password}
-                        className="mt-2"
-                    />
-                </div>
+                        <div className="grid w-full items-center gap-1.5 col-span-6">
+                            <Label htmlFor="password_confirmation">Confirm New Password</Label>
+                            <Input
+                                id="password_confirmation"
+                                type="password"
+                                name="password_confirmation"
+                                required
+                                value={data.password_confirmation}
+                                onChange={(e) => setData('password_confirmation', e.target.value)} />
 
-                <div>
-                    <InputLabel htmlFor="password" value="New Password" />
-
-                    <TextInput
-                        id="password"
-                        ref={passwordInput}
-                        value={data.password}
-                        onChange={(e) => setData('password', e.target.value)}
-                        type="password"
-                        className="mt-1 block w-full"
-                        autoComplete="new-password"
-                    />
-
-                    <InputError message={errors.password} className="mt-2" />
-                </div>
-
-                <div>
-                    <InputLabel
-                        htmlFor="password_confirmation"
-                        value="Confirm Password"
-                    />
-
-                    <TextInput
-                        id="password_confirmation"
-                        value={data.password_confirmation}
-                        onChange={(e) =>
-                            setData('password_confirmation', e.target.value)
-                        }
-                        type="password"
-                        className="mt-1 block w-full"
-                        autoComplete="new-password"
-                    />
-
-                    <InputError
-                        message={errors.password_confirmation}
-                        className="mt-2"
-                    />
-                </div>
-
-                <div className="flex items-center gap-4">
-                    <PrimaryButton disabled={processing}>Save</PrimaryButton>
-
+                                <InputError message={errors['password_confirmation']} className="mt-2" />
+                        </div>
+                    </form>
+                </CardContent>
+                <CardFooter className="gap-2">
+                    <Button className={isMobile ? 'w-full' : 'w-25'} disabled={processing} onClick={updatePassword} variant="default">
+                        {processing ? <span className="flex items-center"><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Changing Password...</span> : 'Change Password'}
+                    </Button>
                     <Transition
                         show={recentlySuccessful}
                         enter="transition ease-in-out"
@@ -139,8 +105,8 @@ export default function UpdatePasswordForm({
                             Saved.
                         </p>
                     </Transition>
-                </div>
-            </form>
+                </CardFooter>
+            </Card>
         </section>
     );
 }

@@ -1,24 +1,22 @@
-
-import { FormEventHandler } from 'react';
-import TextInput from '@/Components/TextInput';
+import { User } from "@/types";
+import { FormEventHandler} from 'react';
 import { Transition } from '@headlessui/react';
 import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import { Link, useForm, usePage } from '@inertiajs/react';
+import { Link, useForm } from '@inertiajs/react';
 
 import { Input } from "@/Components/ui/input";
 import { Label } from "@/Components/ui/label";
+import { Badge } from '@/Components/ui/badge';
 import { Button } from "@/Components/ui/button";
-import Notification from '@/Components/Notification';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, } from "@/Components/ui/card";
+import { Loader2 } from "lucide-react";
 
-export default function UpdateProfileInformation({ mustVerifyEmail, status, className = '', }: { mustVerifyEmail: boolean; status?: string; className?: string; }) {
-    const user = usePage().props.auth.user;
 
+export default function UpdateProfileInformation({ mustVerifyEmail, isMobile, className = '', user }: { mustVerifyEmail: boolean; isMobile?: boolean; className?: string; user: User }) {
     const { data, setData, patch, errors, processing, recentlySuccessful } =
         useForm({
-            name: user.name,
+            first_name: user.first_name,
+            last_name: user.last_name,
             email: user.email,
         });
 
@@ -30,112 +28,79 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
 
     return (
         <section className={className}>
-            {/* <Card>
+            <Card>
                 <CardHeader>
-                    <CardTitle> Profile Information </CardTitle>
-                    <CardDescription> Update your account's profile information and email address. </CardDescription>
+                    <CardTitle>Personal Details</CardTitle>
+                    <CardDescription className="text-sm leading-snug">
+                        Update your account's profile information and email address.
+                    </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <form onSubmit={submit}>
-                        <div className="grid w-full items-center gap-4">
-                            <div className="flex flex-col space-y-1.5">
+                    <form className={`grid auto-rows-min gap-4 grid-cols-${isMobile ? '6' : '12'}`}>
+
+                        <div className='grid w-full items-center gap-1.5 col-span-6'>
+                            <Label htmlFor="first_name">First Name</Label>
+                            <Input
+                                id="first_name"
+                                type="text"
+                                name="first_name"
+                                required
+                                value={data.first_name}
+                                autoComplete="first_name"
+                                onChange={(e) => setData('first_name', e.target.value)} />
+
+                            <InputError message={errors.first_name} className="mt-2" />
+                        </div>
+
+                        <div className='grid w-full items-center gap-1.5 col-span-6'>
+                            <Label htmlFor="last_name">Last Name</Label>
+                            <Input
+                                id="last_name"
+                                type="text"
+                                name="last_name"
+                                required
+                                value={data.last_name}
+                                autoComplete="last_name"
+                                onChange={(e) => setData('last_name', e.target.value)} />
+
+                            <InputError message={errors.last_name} className="mt-2" />
+                        </div>
+
+                        <div className={`grid w-full items-center gap-1.5 col-span-${isMobile ? '6' : '10'}`}>
                             <Label htmlFor="email">Email</Label>
                             <Input
                                 id="email"
                                 type="email"
                                 name="email"
+                                required
                                 value={data.email}
                                 autoComplete="username"
                                 onChange={(e) => setData('email', e.target.value)} />
 
-                                <InputError message={errors.email} className="mt-2" />
-                            </div>
+                                <InputError message={errors['email']} className="mt-2" />
 
-                            <div className="block mt-4">
-
-                            </div>
+                                {mustVerifyEmail && (
+                                    <Link href={route('verification.send')} method="post"
+                                        className="rounded-md text-sm transition duration-300 hover:text-primary hover:ease-in-out"
+                                    >
+                                        Click here to re-send the verification email.
+                                    </Link>
+                                )}
                         </div>
+
+
+                        <div className={isMobile ? 'hidden' : 'flex justify-end w-full items-center col-span-2'}>
+                            <Badge  variant={user.email_verified ? 'default' : 'secondary'}>
+                                {user.email_verified ? 'Verified' : 'Unverified'}
+                            </Badge>
+                        </div>
+
                     </form>
                 </CardContent>
-                <CardFooter className="flex justify-end">
-                    <Button variant="link" disabled={processing} asChild>
-                        <Link href={route('password.request')}>Forgot your password?</Link>
+                <CardFooter className='gap-4'>
+                    <Button className={isMobile ? 'w-full' : 'w-25'} disabled={processing} onClick={submit} variant="default">
+                        {processing ? <span className="flex items-center"><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Udpating Personal Details...</span> : 'Update personal Details'}
                     </Button>
-                    <Button disabled={processing} onClick={submit}>Log in</Button>
-                </CardFooter>
-            </Card> */}
-            <header>
-                <h2 className="text-lg font-medium"> Profile Information </h2>
-                <p className="mt-1 text-sm"> Update your account's profile information and email address. </p>
-            </header>
-
-            <form onSubmit={submit} className="mt-6 space-y-6">
-                <div className="grid w-full items-center gap-4">
-                    <div className="flex flex-col space-y-1.5">
-                    <Label htmlFor="email">Email</Label>
-                    <Input
-                        id="email"
-                        type="email"
-                        name="email"
-                        value={data.email}
-                        autoComplete="username"
-                        onChange={(e) => setData('email', e.target.value)} />
-
-                        <InputError message={errors.email} className="mt-2" />
-                    </div>
-                </div>
-                <div>
-                    <InputLabel htmlFor="name" value="Name" />
-
-                    <TextInput
-                        id="name"
-                        className="mt-1 block w-full"
-                        value={data.name}
-                        onChange={(e) => setData('name', e.target.value)}
-                        required
-                        isFocused
-                        autoComplete="name"
-                    />
-
-                    <InputError className="mt-2" message={errors.name} />
-                </div>
-
-                <div>
-                    <InputLabel htmlFor="email" value="Email" />
-
-                    <TextInput
-                        id="email"
-                        type="email"
-                        className="mt-1 block w-full"
-                        value={data.email}
-                        onChange={(e) => setData('email', e.target.value)}
-                        required
-                        autoComplete="username"
-                    />
-
-                    <InputError className="mt-2" message={errors.email} />
-                </div>
-
-                {mustVerifyEmail && user.email_verified_at === null && (
-                    <div>
-                        <p className="mt-2 text-sm text-gray-800">
-                            Your email address is unverified.
-                            <Link
-                                href={route('verification.send')}
-                                method="post"
-                                as="button"
-                                className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                            >
-                                Click here to re-send the verification email.
-                            </Link>
-                        </p>
-                        <Notification body={'A new verification link has been sent to your email address.'} trigger={status === 'verification-link-sent'} />
-                    </div>
-                )}
-
-                <div className="flex items-center gap-4">
-                    <PrimaryButton disabled={processing}>Save</PrimaryButton>
-
                     <Transition
                         show={recentlySuccessful}
                         enter="transition ease-in-out"
@@ -147,8 +112,8 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                             Saved.
                         </p>
                     </Transition>
-                </div>
-            </form>
+                </CardFooter>
+            </Card>
         </section>
     );
 }

@@ -1,26 +1,75 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import { PageProps } from '@/types';
 import { Head } from '@inertiajs/react';
+import { useState, useEffect } from 'react';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, } from "@/Components/ui/card";
 
-export default function Dashboard() {
+export default function Dashboard({ auth }: PageProps) {
     return (
-        <AuthenticatedLayout
-            header={
-                <h2 className="text-xl font-semibold leading-tight text-gray-800">
-                    Dashboard
-                </h2>
-            }
-        >
+        <AuthenticatedLayout user={auth.user} header={ <h2 className="text-xl font-semibold leading-tight"> Dashboard </h2> } >
             <Head title="Dashboard" />
 
-            <div className="py-12">
-                <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                        <div className="p-6 text-gray-900">
-                            You're logged in!
-                        </div>
-                    </div>
+            <div className="grid auto-rows-min gap-4 md:grid-cols-3">
+                <div className='aspect-video rounded-xl'>
+                    <Card className="h-full">
+                        <CardHeader>
+                            <CardTitle></CardTitle>
+                            <CardDescription></CardDescription>
+                        </CardHeader>
+                        <CardContent>
+
+                        </CardContent>
+                        <CardFooter className="flex justify-end">
+
+                        </CardFooter>
+                    </Card>
+                </div>
+                <div className='aspect-video rounded-xl'>
+                    <Card className="h-full">
+                        <CardHeader>
+                            <CardTitle></CardTitle>
+                            <CardDescription></CardDescription>
+                        </CardHeader>
+                        <CardContent>
+
+                        </CardContent>
+                        <CardFooter className="flex justify-end">
+
+                        </CardFooter>
+                    </Card>
+                </div>
+                <div className='aspect-video rounded-xl'>
+                    <Card className="h-full">
+                        <CardHeader>
+                            <CardTitle></CardTitle>
+                            <CardDescription></CardDescription>
+                        </CardHeader>
+                        <CardContent>
+
+                        </CardContent>
+                        <CardFooter className="flex justify-end">
+
+                        </CardFooter>
+                    </Card>
                 </div>
             </div>
+            {/* <div className="min-h-[100vh] flex-1 rounded-xl md:min-h-min" /> */}
+
+            <div className='aspect-video rounded-xl'>
+                <Card className="h-full">
+                    <CardHeader>
+                        <CardTitle></CardTitle>
+                        <CardDescription></CardDescription>
+                    </CardHeader>
+                    <CardContent>
+
+                    </CardContent>
+                    <CardFooter className="flex justify-end">
+
+                    </CardFooter>
+                </Card>
+            </div>
+
         </AuthenticatedLayout>
     );
 }
