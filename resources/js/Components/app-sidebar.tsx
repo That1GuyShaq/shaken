@@ -3,7 +3,7 @@ import { Link } from '@inertiajs/react';
 import { ModeToggle } from '@/Components/ModeToggle';
 import { Separator } from "@/Components/ui/separator";
 import ApplicationLogo from '@/Components/ApplicationLogo';
-import {  BookOpen, GalleryVerticalEnd, Martini, ShoppingBasket,  } from "lucide-react";
+import {  BookOpen, GalleryVerticalEnd, Hammer, Martini, ShoppingBasket,  } from "lucide-react";
 import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarRail, } from "@/Components/ui/sidebar";
 
 const data = {
@@ -12,6 +12,11 @@ const data = {
       name: "Dashboard",
       url: route('dashboard'),
       icon: GalleryVerticalEnd,
+    },
+    {
+        name: "Drinkware & Tools",
+        url: "#",
+        icon: Hammer,
     },
     {
       name: "Ingredients",
