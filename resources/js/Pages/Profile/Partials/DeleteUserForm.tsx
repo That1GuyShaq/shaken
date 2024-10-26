@@ -55,7 +55,7 @@ export default function DeleteUserForm({ className = '', isMobile }: {  classNam
                 </CardHeader>
                 <CardFooter className="flex items-center justify-end">
                     <Dialog open={dialogIsOpen} onOpenChange={handleOpenChange}>
-                        <DialogTrigger>
+                        <DialogTrigger asChild>
                             <Button className={isMobile ? 'w-full' : 'w-25'} disabled={dialogIsOpen} variant="destructive">
                                 {dialogIsOpen ? <span className="flex items-center"><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Awaiting Confirmation...</span> : 'Delete Account'}
                             </Button>
