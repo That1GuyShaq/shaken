@@ -209,7 +209,7 @@ export default function Authenticated({ user, children }: PropsWithChildren<{ us
     // const isMobile = useIsMobile();
     return (
         <>
-            <SidebarProvider >
+            <SidebarProvider defaultOpen >
                 <AppSidebar app={app} />
                 <SidebarInset>
                     <AppTopbar user={user} app={app}/>

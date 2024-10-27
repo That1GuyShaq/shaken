@@ -3,6 +3,7 @@ import { Link } from '@inertiajs/react';
 import BreadcrumbBar from './Breadcrumbs';
 import { Button } from '@/Components/ui/button';
 import { useIsMobile } from "@/hooks/use-mobile";
+import { ModeToggle } from '@/Components/ModeToggle';
 import { Separator } from "@/Components/ui/separator";
 import { SidebarTrigger, } from "@/Components/ui/sidebar";
 import { Avatar, AvatarFallback, AvatarImage, } from "@/Components/ui/avatar";
@@ -19,7 +20,8 @@ export default function AppTopbar({ user, app }: { user: User, app: App }) {
                 <BreadcrumbBar app={app} />
             </div>
 
-            <div className=" text-sm">
+            <div className=" flex items-center text-sm">
+                {isMobile && <ModeToggle />}
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button variant="ghost" >

@@ -33,7 +33,7 @@ const data = {
   catalouge: [
     {
       name: "Recipes",
-      url: "#",
+      url: route('recipes.index'),
       icon: BookOpen,
     }
   ],
@@ -42,7 +42,7 @@ const data = {
 export default function AppSidebar({ app }: { app: App }) {
 
     return (
-        <Sidebar  collapsible="icon" variant='inset'>
+        <Sidebar collapsible="icon" variant='inset'>
             <SidebarHeader>
                 <SidebarMenu>
                     <SidebarMenuItem>
