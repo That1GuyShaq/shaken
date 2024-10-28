@@ -1,7 +1,7 @@
 
+import { useState } from 'react';
 import { PageProps } from '@/types';
 import { Head } from '@inertiajs/react';
-import { useState, useEffect } from 'react';
 import { useIsMobile } from "@/hooks/use-mobile";
 import Notification from '@/Components/Notification';
 import DeleteUserForm from './Partials/DeleteUserForm';
@@ -31,9 +31,7 @@ export default function Edit({ mustVerifyEmail, status, auth }: PageProps<{ must
     console.log(status);
 
     return (
-        <AuthenticatedLayout
-            user={auth.user}
-            header={<h2 className="font-semibold text-xl leading-tight">Profile</h2>} >
+        <AuthenticatedLayout user={auth.user} >
 
             <Head title="Profile" />
 
