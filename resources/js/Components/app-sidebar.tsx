@@ -1,9 +1,10 @@
 import { App } from '@/types';
 import { Link } from '@inertiajs/react';
+import { usePage } from '@inertiajs/react';
 import { ModeToggle } from '@/Components/ModeToggle';
 import { Separator } from "@/Components/ui/separator";
 import ApplicationLogo from '@/Components/ApplicationLogo';
-import {  BookOpen, GalleryVerticalEnd, Hammer, Martini, ShoppingBasket,  } from "lucide-react";
+import {  BookOpen, GalleryVerticalEnd, Globe, Hammer, Martini, ShoppingBasket,  } from "lucide-react";
 import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarRail, } from "@/Components/ui/sidebar";
 
 const data = {
@@ -32,14 +33,20 @@ const data = {
   ],
   catalouge: [
     {
-      name: "Recipes",
+      name: "My Recipes",
       url: route('recipes.index'),
       icon: BookOpen,
+    },
+    {
+        name: "All Recipes",
+        url: route('recipes.global'),
+        icon: Globe,
     }
   ],
 }
 
 export default function AppSidebar({ app }: { app: App }) {
+    const currentPageUrl = usePage().url;
 
     return (
         <Sidebar collapsible="icon" variant='inset'>
@@ -64,7 +71,7 @@ export default function AppSidebar({ app }: { app: App }) {
                     <SidebarMenu>
                         {data.main.map((item) => (
                             <SidebarMenuItem key={item.name}>
-                                <SidebarMenuButton asChild>
+                                <SidebarMenuButton asChild className={(item.url === '#' ? item.url : new URL(item.url).pathname) === currentPageUrl ? 'bg-sidebar-accent' : ''}>
                                     <Link href={item.url}>
                                         <item.icon />
                                         <span>{item.name}</span>
@@ -79,7 +86,7 @@ export default function AppSidebar({ app }: { app: App }) {
                     <SidebarMenu>
                         {data.catalouge.map((item) => (
                             <SidebarMenuItem key={item.name}>
-                                <SidebarMenuButton asChild>
+                                <SidebarMenuButton asChild className={(item.url === '#' ? item.url : new URL(item.url).pathname) === currentPageUrl ? 'bg-sidebar-accent' : ''}>
                                     <Link href={item.url}>
                                         <item.icon />
                                         <span>{item.name}</span>

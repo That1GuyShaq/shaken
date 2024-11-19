@@ -214,7 +214,7 @@ export default function Authenticated({ user, children }: PropsWithChildren<{ us
                 <SidebarInset>
                     <AppTopbar user={user} app={app}/>
                     <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-                        {children }
+                        { children }
                     </div>
                     <Toaster />
                 </SidebarInset>

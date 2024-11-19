@@ -20,11 +20,11 @@ export default function AppTopbar({ user, app }: { user: User, app: App }) {
                 <BreadcrumbBar app={app} />
             </div>
 
-            <div className=" flex items-center text-sm">
+            <div className=" flex items-center text-sm pe-4">
                 {isMobile && <ModeToggle />}
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" >
+                        <Button variant="ghost">
                         <Avatar className="h-8 w-8 rounded-lg" >
                             <AvatarImage src={user.profile_photo_url} />
                             <AvatarFallback>{user.initials}</AvatarFallback>

@@ -28,7 +28,6 @@ export default function Edit({ mustVerifyEmail, status, auth }: PageProps<{ must
         setTrigger(true);
         setBody(status);
     }
-    console.log(status);
 
     return (
         <AuthenticatedLayout user={auth.user} >

@@ -6,6 +6,9 @@ import { App } from '@/types';
 export default function BreadcrumbBar({ app }: { app: App }) {
     const path = window.location.pathname.split('/').filter((part) => part !== '');
 
+    const splitAndCapitalize = (str: string): string => {
+        return str.split('-').map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+    }
     return (
         <Breadcrumb>
             <BreadcrumbList >
@@ -13,8 +16,6 @@ export default function BreadcrumbBar({ app }: { app: App }) {
                     {app.name}
                 </BreadcrumbItem>
                 {path.map((part, key) => {
-                    // The last item in the breadcrumb trail should be a BreadcrumbPage
-                    // and the rest should be BreadcrumbItem elements
                     const isLastItem = key === path.length - 1;
                     return (
                         <Fragment key={key}>
@@ -22,14 +23,12 @@ export default function BreadcrumbBar({ app }: { app: App }) {
                             {isLastItem ? (
                                 <BreadcrumbPage>
                                     <Link href={`/${path.slice(0, key + 1).join('/')}`} >
-                                        {part.charAt(0).toUpperCase() + part.slice(1)}
+                                        {splitAndCapitalize(part)}
                                     </Link>
                                 </BreadcrumbPage>
                             ) : (
                                 <BreadcrumbItem>
-                                    {/* <BreadcrumbLink href={`/${path.slice(0, key + 1).join('/')}`}> */}
-                                        {part.charAt(0).toUpperCase() + part.slice(1)}
-                                    {/* </BreadcrumbLink> */}
+                                    {splitAndCapitalize(part)}
                                 </BreadcrumbItem>
                             )}
                         </Fragment>

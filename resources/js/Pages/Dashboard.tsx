@@ -53,9 +53,8 @@ export default function Dashboard({ auth }: PageProps) {
                     </Card>
                 </div>
             </div>
-            {/* <div className="min-h-[100vh] flex-1 rounded-xl md:min-h-min" /> */}
 
-            <div className='aspect-video rounded-xl'>
+            <div className='min-h-[100vh] flex-1 rounded-xl md:min-h-min'>
                 <Card className="h-full">
                     <CardHeader>
                         <CardTitle></CardTitle>

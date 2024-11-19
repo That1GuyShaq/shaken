@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use Inertia\Inertia;
 use App\Models\Recipe;
+use App\Models\Category;
+use App\Http\Resources\CategoryResource;
 use App\Http\Requests\StoreRecipeRequest;
 use App\Http\Requests\UpdateRecipeRequest;
+use App\Http\Resources\RecipeTableResource;
 
 class RecipeController extends Controller
 {
@@ -22,7 +26,11 @@ class RecipeController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+        dd($categories);
+        return Inertia::render('Recipes/Create', [
+            'categories' => CategoryResource::collection($categories),
+        ]);
     }
 
     /**
@@ -38,7 +46,10 @@ class RecipeController extends Controller
      */
     public function show(Recipe $recipe)
     {
-        //
+        dd($recipe);
+        return Inertia::render('Recipes/Show', [
+            'recipe' => RecipeTableResource::make($recipe),
+        ]);
     }
 
     /**

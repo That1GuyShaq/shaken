@@ -1,4 +1,6 @@
-import { FormEventHandler } from 'react';
+
+import axios from 'axios';
+import { FormEventHandler, useEffect } from 'react';
 import GuestLayout from '@/Layouts/GuestLayout';
 import InputError from '@/Components/InputError';
 import { Head, Link, useForm } from '@inertiajs/react';
@@ -10,11 +12,16 @@ import { Checkbox } from '@/Components/ui/checkbox';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, } from "@/Components/ui/card";
 
 export default function Login() {
-    const { data, setData, post, processing, errors, reset } = useForm({
-        email: '',
-        password: '',
-        remember: false,
-    });
+    const { data, setData, post, processing, errors, reset } = useForm({ email: '', password: '', remember: false, });
+
+    const refreshCsrfToken = async () => {
+        try {
+            const response = await axios.get('/refresh-csrf');
+            axios.defaults.headers.common['X-CSRF-TOKEN'] = response.data.csrf_token;
+        } catch (error) {
+            console.error("Could not refresh CSRF token:", error);
+        }
+    };
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
@@ -23,6 +30,14 @@ export default function Login() {
             onFinish: () => reset('password'),
         });
     };
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            refreshCsrfToken();
+        }, 10 * 60 * 1000); // Refresh every 10 minutes
+
+        return () => clearInterval(interval);
+    }, []);
 
     return (
         <GuestLayout>

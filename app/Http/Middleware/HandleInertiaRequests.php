@@ -35,7 +35,7 @@ class HandleInertiaRequests extends Middleware
             $data->first_name = $name[0];
             $data->last_name = end($name);
             $data->initials = strtoupper(substr($name[0], 0, 1) . substr($name[1], 0, 1));
-            $data->profile_photo_url = $request->user()->profile_photo_url ? 'storage/' . $request->user()->profile_photo_url : null;
+            $data->profile_photo_url = $request->user()->profile_photo_url ? '/storage/' . $request->user()->profile_photo_url : null;
             $data->email = $request->user()->email;
             $data->email_verified = (bool)$request->user()->email_verified_at;
         }

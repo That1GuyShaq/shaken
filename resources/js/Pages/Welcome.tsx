@@ -31,7 +31,6 @@ export default function Welcome({ auth }: PageProps<{}>) {
         e.preventDefault();
 
         const formType = (e.target as HTMLFormElement).getAttribute('form');
-        console.log(formType);
 
         if (formType === 'login') {
             loginPost(route('login'), {

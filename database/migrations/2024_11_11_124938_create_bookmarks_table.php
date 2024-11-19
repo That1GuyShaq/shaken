@@ -11,21 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('recipes', function (Blueprint $table) {
+        Schema::create('bookmarks', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('type');
-            $table->string('description');
-            $table->longText('history');
-            $table->jsonb('ingredients');
-            $table->jsonb('instructirons');
-            $table->jsonb('tags');
+            $table->bigInteger('recipe_id');
             $table->bigInteger('user_id');
-            $table->softDeletes();
+            $table->integer('made')->default(0);
+            $table->unique(['recipe_id', 'user_id']);
+            $table->timestamp('bookmarked_at')->useCurrent();
             $table->timestamps();
         });
 
-        Schema::table('recipes', function (Blueprint $table) {
+        Schema::table('bookmarks', function (Blueprint $table) {
+            $table->foreign('recipe_id')->references('id')->on('recipes')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
@@ -35,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('recipes');
+        Schema::dropIfExists('bookmarks');
     }
 };

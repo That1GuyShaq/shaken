@@ -40,7 +40,6 @@ export default function DeleteUserForm({ className = '', isMobile }: {  classNam
         if (!open) {
             clearErrors();
             reset();
-            console.log('foo');
         }
     };
 
