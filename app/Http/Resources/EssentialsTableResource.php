@@ -6,7 +6,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class RecipeTableResource extends JsonResource
+class EssentialsTableResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -18,11 +18,10 @@ class RecipeTableResource extends JsonResource
         return [
             'id'          => $this->id,
             'name'        => $this->name,
+            'category'    => Category::find($this->category)->name,
             'description' => $this->description,
-            'category'    => category::find($this->category)->name,
             'tags'        => implode(', ', $this->tags),
             'bookmark'    => boolval($this->bookmarks->where('user_id', auth()->user()->id)->first())
-
         ];
     }
 }

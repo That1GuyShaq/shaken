@@ -48,6 +48,11 @@ class User extends Authenticatable implements MustVerifyEmail
         ];
     }
 
+    public function essentials(): HasMany
+    {
+        return $this->hasMany(Essentials::class);
+    }
+
     public function recipes(): HasMany
     {
         return $this->hasMany(Recipe::class);
@@ -56,5 +61,26 @@ class User extends Authenticatable implements MustVerifyEmail
     public function bookmarks(): HasMany
     {
         return $this->hasMany(Bookmark::class);
+    }
+
+    /**
+     * Get the recipes bookmarked by the user.
+     */
+    public function bookmarkedRecipes()
+    {
+        return $this->bookmarks()->where('bookmarkable_type', Recipe::class)
+            ->get()
+            ->map(function ($bookmark) {
+                return $bookmark->bookmarkable;
+        });
+    }
+
+
+    /**
+     * Get the essentials bookmarked by the user.
+     */
+    public function bookmarkedEssentials()
+    {
+        return $this->bookmarks()->where('bookmarkable_type', Essentials::class)->get();
     }
 }

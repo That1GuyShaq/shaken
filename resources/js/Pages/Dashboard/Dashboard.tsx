@@ -1,28 +1,26 @@
+
 import { PageProps } from '@/types';
 import { Head } from '@inertiajs/react';
-import { useState, useEffect } from 'react';
+import { useIsMobile } from "@/hooks/use-mobile";
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import { RadialChartStack } from '@/Pages/Dashboard/Partials/RadialChart-Stack';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, } from "@/Components/ui/card";
 
-export default function Dashboard({ auth }: PageProps) {
+interface Recipes {
+    bookmarked: number;
+    un_bookmarked: number;
+}
+
+export default function Dashboard({ auth, recipes }: PageProps <{ recipes: Recipes}>) {
+    const isMobile = useIsMobile();
+
     return (
-        <AuthenticatedLayout user={auth.user} header={ <h2 className="text-xl font-semibold leading-tight"> Dashboard </h2> } >
+        <AuthenticatedLayout user={auth.user} >
             <Head title="Dashboard" />
 
-            <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-                <div className='aspect-video rounded-xl'>
-                    <Card className="h-full">
-                        <CardHeader>
-                            <CardTitle></CardTitle>
-                            <CardDescription></CardDescription>
-                        </CardHeader>
-                        <CardContent>
-
-                        </CardContent>
-                        <CardFooter className="flex justify-end">
-
-                        </CardFooter>
-                    </Card>
+            <div className="grid auto-rows-min gap-4 grid-cols-3">
+                <div className={`aspect-video rounded-xl ${isMobile  ? 'col-span-3' : 'col-span-3'}`}>
+                    <RadialChartStack chartData={recipes} />
                 </div>
                 <div className='aspect-video rounded-xl'>
                     <Card className="h-full">

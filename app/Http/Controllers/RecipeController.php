@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use DB;
+use App\Models\Bookmark;
+use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Recipe;
 use App\Models\Category;
-use App\Http\Resources\CategoryResource;
+use Illuminate\Http\Request;
 use App\Http\Requests\StoreRecipeRequest;
 use App\Http\Requests\UpdateRecipeRequest;
 use App\Http\Resources\RecipeTableResource;
+use App\Http\Resources\CategoryListResource;
 
 class RecipeController extends Controller
 {
@@ -26,10 +28,11 @@ class RecipeController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
-        dd($categories);
+        $categories = Category::all()->sortBy('name');
         return Inertia::render('Recipes/Create', [
-            'categories' => CategoryResource::collection($categories),
+            'spirits'     => [],
+            'ingredients' => [],
+            'categories'  => CategoryListResource::collection($categories),
         ]);
     }
 
@@ -74,5 +77,21 @@ class RecipeController extends Controller
     public function destroy(Recipe $recipe)
     {
         //
+    }
+
+    /**
+     * List all recipes in storage
+     */
+    public function list(Request $request)
+    {
+        $user = User::find(auth()->user()->id);
+
+        if ($request->source === 'global') {
+            $recipes = Recipe::all();
+        }else {
+            $recipes = $user->bookmarkedRecipes();
+        }
+
+        return RecipeTableResource::collection($recipes);
     }
 }

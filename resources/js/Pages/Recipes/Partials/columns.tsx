@@ -1,14 +1,10 @@
 "use client"
 
-import axios from "axios";
-import { useState } from "react";
 import { Link } from "@inertiajs/react";
+import Bookmark from "@/Components/Bookmark";
 import { Badge } from "@/Components/ui/badge";
-import { Button } from "@/Components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
-import { Checkbox } from "@/Components/ui/checkbox";
-import Notification from '@/Components/Notification';
-import { Martini, WineOff, GlassWater, Milk, Beer, Tag, Bookmark } from "lucide-react";
+import { Martini, WineOff, GlassWater, Milk, Beer, Tag } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/Components/ui/tooltip";
 
 export type Recipe = {
@@ -16,47 +12,16 @@ export type Recipe = {
     name: string
     tags: string
     category: string
-    description: string
     bookmark: boolean
+    description: string
 }
-
-const handleBookmark = async (setTrigger: any, setFill: any, setTip: any, setBody: any, setClassName: any, setBookmarked: any, id: number, bookmarked: boolean) => {
-    try {
-      await axios.post(route('bookmark.bookmark', [id, bookmarked])).then((response) => {
-        if (response.data.success) {
-            setTrigger(true);
-            setBody(response.data.success);
-            if (bookmarked) {
-                setFill("none");
-                setTip("Bookmark");
-                setBookmarked(false);
-            }else{
-                setFill("currentColor");
-                setTip("Un-Bookmark");
-                setBookmarked(true);
-            }
-        }else{
-            setTrigger(true);
-            setClassName("text-yellow-700");
-            setBody(response.data.error);
-        }
-      });
-
-    } catch (error) {
-    }
-};
 
 export const columns: ColumnDef<Recipe>[] = [
 
-    // {
-    //     id: "select",
-    //     header: ({ table }) => (
-    //         <Checkbox aria-label="Select all" checked={table.getIsAllRowsSelected() || (table.getIsSomePageRowsSelected() && "indeterminate")} onCheckedChange={(value) => table.toggleAllRowsSelected(!!value)} />
-    //     ),
-    //     cell: ({ row }) => (
-    //         <Checkbox caria-label="Select row" checked={row.getIsSelected()} onCheckedChange={(value) => row.toggleSelected(!!value)} />
-    //     ),
-    // },
+    {
+        header: "ID",
+        accessorKey: "id"
+    },
     {
         header: "Name",
         accessorKey: "name",
@@ -118,7 +83,7 @@ export const columns: ColumnDef<Recipe>[] = [
                             <Link href={route('recipes.show', id)} className="font-semibold text-nowrap flex items-center"><Icon className="m-1 h-4 text-primary"/>{name}</Link>
                         </TooltipTrigger>
                         <TooltipContent>
-                            <p>{category}</p>
+                            <p>{category.slice(0, -1)}</p>
                         </TooltipContent>
                     </Tooltip>
                 </TooltipProvider>
@@ -142,39 +107,9 @@ export const columns: ColumnDef<Recipe>[] = [
         header: "Actions",
         cell: ({row}) => {
             const id = row.original.id as number;
-            const [body, setBody] = useState<string>('');
-            const [trigger, setTrigger] = useState<boolean>(false);
-            const [className, setClassName] = useState<string>('');
-            const [bookmarked, setBookmarked] = useState<boolean>(row.original.bookmark as boolean);
-            const [fill, setFill] = useState<string>(bookmarked ? "currentColor" : "none");
-            const [tip, setTip] = useState<string>(bookmarked ? "Un-Bookmark" : "Bookmark");
+            const bookmarked = row.original.bookmark as boolean;
 
-            // let fill = 'none';
-
-            // if (bookmark) {
-            //     // setFill('currentColor');
-            //     tip  = 'Un-Bookmark';
-            //     // fill = 'currentColor';
-            // }
-
-            return(
-                <>
-                <Notification trigger={trigger} body={body} classes={className} />
-                <TooltipProvider>
-                    <Tooltip delayDuration={100} >
-                        <TooltipTrigger asChild>
-
-                        <Button variant="link" onClick={() => handleBookmark(setTrigger, setFill, setTip, setBody, setClassName,setBookmarked, id, bookmarked)} className="text-primary">
-                                <Bookmark fill={fill} className="h-4"/>
-                            </Button>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                            {tip}
-                        </TooltipContent>
-                    </Tooltip>
-                </TooltipProvider>
-                </>
-            );
+            return <Bookmark id={id} bookmarked={bookmarked} subject="recipe" isMobile={false} />;
         }
     }
 ]

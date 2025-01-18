@@ -9,18 +9,22 @@ import { SidebarTrigger, } from "@/Components/ui/sidebar";
 import { Avatar, AvatarFallback, AvatarImage, } from "@/Components/ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/Components/ui/dropdown-menu";
 
-export default function AppTopbar({ user, app }: { user: User, app: App }) {
+export function AppTopbar({ user, app }: { user: User, app: App }) {
     const isMobile = useIsMobile();
 
     return (
         <header className="flex justify-between h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
             <div className="flex items-center gap-2 px-4">
-                <SidebarTrigger />
-                <Separator orientation="vertical" className="mr-2 h-4" />
+                {!isMobile &&
+                    <>
+                        <SidebarTrigger />
+                        <Separator orientation="vertical" className="mr-2 h-4" />
+                    </>
+                }
                 <BreadcrumbBar app={app} />
             </div>
 
-            <div className=" flex items-center text-sm pe-4">
+            <div className=" flex items-center text-sm pe-1">
                 {isMobile && <ModeToggle />}
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>

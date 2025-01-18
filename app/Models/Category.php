@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
@@ -14,6 +15,7 @@ class Category extends Model
     protected $fillable = [
         'name',
         'definition',
+        'classification',
         'characteristics',
         'examples',
     ];
@@ -40,5 +42,26 @@ class Category extends Model
     public function recipes()
     {
         return $this->hasMany(Recipe::class);
+    }
+
+    public function essentials()
+    {
+        return $this->hasMany(Essentials::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public static function essentialsListing()
+    {
+        return self::where('classification', 'Essential')
+            ->get(['name', 'id'])
+            ->map(fn($category) => [
+                'name' => $category->name,
+                'id'   => (string) $category->id,
+            ])
+            ->toArray();
     }
 }

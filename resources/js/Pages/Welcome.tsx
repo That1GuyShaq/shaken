@@ -181,6 +181,9 @@ export default function Welcome({ auth }: PageProps<{}>) {
                     </Card>
                 </TabsContent>
             </Tabs>
+           <p className="text-center text-sm text-muted-foreground mt-4">
+                By clicking continue, you agree to our <Link href={route('terms.service')} target='_blank' className="text-primary">Terms of Service</Link> and <Link href={route('privacy.policy')} target='_blank' className="text-primary">Privacy Policy</Link>.
+           </p>
 
         </GuestLayout>
     );

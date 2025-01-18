@@ -1,28 +1,30 @@
 "use client"
-import axios from "axios";
+
 import { useState } from "react";
 import { Link } from "@inertiajs/react";
+import { PlusIcon } from "lucide-react";
 import { Input } from "@/Components/ui/input";
 import { Button } from "@/Components/ui/button";
-import Notification from '@/Components/Notification';
 import { Card, CardContent } from '@/Components/ui/card';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/Components/ui/tooltip";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/Components/ui/table";
-import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/Components/ui/pagination";
-import { ColumnDef, flexRender, getCoreRowModel, getPaginationRowModel, useReactTable, ColumnFiltersState, getFilteredRowModel,FilterFn } from "@tanstack/react-table";
-import { PlusIcon } from "lucide-react";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/Components/ui/dialog";
+import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/Components/ui/pagination";
+import { ColumnDef, flexRender, getCoreRowModel, getPaginationRowModel, useReactTable, ColumnFiltersState, getSortedRowModel, SortingState, getFilteredRowModel, FilterFn } from "@tanstack/react-table";
 
 interface DataTableProps<TData, TValue> {
-  data: TData[]
-  className?: string
-  columns: ColumnDef<TData, TValue>[]
-//   onBookmark: (id: number, bookmark: boolean) => void
+    data: TData[];
+    create?: boolean;
+    className?: string;
+    columns: ColumnDef<TData, TValue>[];
+    link?: { name: string; href: string; };
+    dialog?:  JSX.Element;
 }
 
-export function DataTable<TData, TValue>({ className, columns, data }: DataTableProps<TData, TValue>) {
-    const [status, setStatus]               = useState(null);
+export function DataTable<TData, TValue>({ className, columns, data, create = true, link, dialog }: DataTableProps<TData, TValue>) {
+
     const [globalFilter, setGlobalFilter]   = useState("");
-    const [rowSelection, setRowSelection]   = useState({});
+    const [sorting, setSorting]             = useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
     const [pagination, setPagination]       = useState({ pageIndex: 0,  pageSize: 8});
 
@@ -41,24 +43,27 @@ export function DataTable<TData, TValue>({ className, columns, data }: DataTable
     const table = useReactTable({
         data,
         columns,
+        onSortingChange: setSorting,
+        onPaginationChange: setPagination,
         getCoreRowModel: getCoreRowModel(),
-        onRowSelectionChange: setRowSelection,
+        getSortedRowModel: getSortedRowModel(),
         onColumnFiltersChange: setColumnFilters,
         getFilteredRowModel: getFilteredRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
-        onPaginationChange: setPagination,
         state: {
+            sorting,
             globalFilter,
             columnFilters,
-            rowSelection,
-            pagination
+            pagination,
+            columnVisibility: {
+                id:false
+            }
         },
         globalFilterFn: filterContains
     });
 
     return (
         <div className={className}>
-            <Notification trigger={status !== null} body={`${status}`} />
             <Card className="col-span-1">
                 <CardContent className='p-2 flex justify-between'>
                     <TooltipProvider>
@@ -77,18 +82,24 @@ export function DataTable<TData, TValue>({ className, columns, data }: DataTable
                         </Tooltip>
                     </TooltipProvider>
 
-                    <Button variant='ghost' asChild>
-                        <Link className="hover:text-primary text-black text-sm" href={route("recipes.create")}>
-                            <PlusIcon size={20} />Recipe
-                        </Link>
-                    </Button>
+                    {create && (
+                        link ? (
+                            <Button variant='ghost' asChild>
+                                <Link className="text-sm" href={link?.href}>
+                                    <PlusIcon size={20} />{link?.name}
+                                </Link>
+                            </Button>
+                        ) : dialog ? (
+                            dialog
+                        ) : null
+                    )}
+
                 </CardContent>
             </Card>
 
-            <div className="col-span-1">
             <Card className="col-span-1">
                 <CardContent className='p-2'>
-                    <Table className="h-96">
+                    <Table className="h-full">
                         <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
                             <TableRow key={headerGroup.id}>
@@ -125,10 +136,7 @@ export function DataTable<TData, TValue>({ className, columns, data }: DataTable
                         )}
                         </TableBody>
                     </Table>
-                    <div className="flex-1 text-sm text-muted-foreground">
-                        {table.getFilteredSelectedRowModel().rows.length} of{" "}
-                        {table.getFilteredRowModel().rows.length} rows selected.
-                    </div>
+
                     <Pagination className="flex items-center justify-end space-x-2 py-4">
                         <PaginationContent>
                             <PaginationItem>
@@ -153,7 +161,6 @@ export function DataTable<TData, TValue>({ className, columns, data }: DataTable
 
                 </CardContent>
             </Card>
-            </div>
         </div>
     )
 }

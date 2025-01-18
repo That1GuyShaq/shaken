@@ -4,29 +4,29 @@ import { usePage } from '@inertiajs/react';
 import { ModeToggle } from '@/Components/ModeToggle';
 import { Separator } from "@/Components/ui/separator";
 import ApplicationLogo from '@/Components/ApplicationLogo';
-import {  BookOpen, GalleryVerticalEnd, Globe, Hammer, Martini, ShoppingBasket,  } from "lucide-react";
+import {  BookOpen, LayoutDashboard, Globe, Hammer, Martini, ShoppingBasket,  } from "lucide-react";
 import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarRail, } from "@/Components/ui/sidebar";
 
 const data = {
   main: [
     {
       name: "Dashboard",
-      url: route('dashboard'),
-      icon: GalleryVerticalEnd,
+      url:  route('dashboard'),
+      icon: LayoutDashboard,
     },
     {
-        name: "Drinkware & Tools",
-        url: "#",
+        name: "Essentials",
+        url:  route('essentials.index'),
         icon: Hammer,
     },
     {
       name: "Ingredients",
-      url: "#",
+      url:  "#",
       icon: ShoppingBasket,
     },
     {
       name: "Spirits",
-      url: "#",
+      url:  "#",
       icon: Martini,
 
     }
@@ -34,18 +34,18 @@ const data = {
   catalouge: [
     {
       name: "My Recipes",
-      url: route('recipes.index'),
+      url:  route('recipes.index'),
       icon: BookOpen,
     },
     {
         name: "All Recipes",
-        url: route('recipes.global'),
+        url:  route('recipes.global'),
         icon: Globe,
     }
   ],
 }
 
-export default function AppSidebar({ app }: { app: App }) {
+export function AppSidebar({ app }: { app: App }) {
     const currentPageUrl = usePage().url;
 
     return (

@@ -3,13 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Spatie\Activitylog\Traits\LogsActivity;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Recipe extends Model
+class Essentials extends Model
 {
-    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -18,14 +14,11 @@ class Recipe extends Model
      */
     protected $fillable = [
         'name',
-        'type',
-        'description',
-        'history',
-        'ingredients',
-        'instructirons',
         'tags',
         'category',
+        'description',
         'user_id',
+        'generated',
     ];
 
     /**
@@ -36,29 +29,13 @@ class Recipe extends Model
     protected function casts(): array
     {
         return [
-            'tags' => 'array',
+            'tags'       => 'array',
+            'generated'  => 'boolean',
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
-            'deleted_at' => 'datetime',
         ];
     }
 
-    /**
-     * The user that created this recipe.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
-
-
-    /**
-     * The category this recipe belongs to.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
     public function category()
     {
         return $this->belongsTo(Category::class, 'category', 'id');

@@ -13,16 +13,14 @@ return new class extends Migration
     {
         Schema::create('bookmarks', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('recipe_id');
             $table->bigInteger('user_id');
             $table->integer('made')->default(0);
-            $table->unique(['recipe_id', 'user_id']);
-            $table->timestamp('bookmarked_at')->useCurrent();
+            $table->morphs('bookmarkable');
             $table->timestamps();
+            $table->unique(['user_id', 'bookmarkable_id', 'bookmarkable_type']);
         });
 
         Schema::table('bookmarks', function (Blueprint $table) {
-            $table->foreign('recipe_id')->references('id')->on('recipes')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }

@@ -1,8 +1,8 @@
 
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator, } from "@/Components/ui/breadcrumb";
-import { Link } from '@inertiajs/react';
-import { Fragment, ReactNode } from "react";
 import { App } from '@/types';
+import { Fragment } from "react";
+import { Link } from '@inertiajs/react';
+import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator, } from "@/Components/ui/breadcrumb";
 export default function BreadcrumbBar({ app }: { app: App }) {
     const path = window.location.pathname.split('/').filter((part) => part !== '');
 

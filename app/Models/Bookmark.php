@@ -12,10 +12,8 @@ class Bookmark extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'recipe_id',
         'user_id',
         'made',
-        'bookmarked_at',
     ];
 
     /**
@@ -26,7 +24,6 @@ class Bookmark extends Model
     protected function casts(): array
     {
         return [
-            'bookmarked_at' => 'datetime',
             'created_at'    => 'datetime',
             'updated_at'    => 'datetime',
         ];
@@ -35,5 +32,10 @@ class Bookmark extends Model
     public function recipe()
     {
         return $this->belongsTo(Recipe::class);
+    }
+
+    public function bookmarkable()
+    {
+        return $this->morphTo('bookmarkable');
     }
 }
