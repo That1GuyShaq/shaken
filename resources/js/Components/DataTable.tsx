@@ -137,12 +137,16 @@ export function DataTable<TData, TValue>({ className, columns, data, create = tr
                         </TableBody>
                     </Table>
 
-                    <Pagination className="flex items-center justify-end space-x-2 py-4">
+                    <Pagination className="space-x-2 py-4">
                         <PaginationContent>
+                            <PaginationItem className="flex items-center text-sm font-medium opacity-50">
+                                Page {table.getState().pagination.pageIndex + 1} of{" "}
+                                {table.getPageCount()}
+                            </PaginationItem>
                             <PaginationItem>
                                 <PaginationPrevious href="#" onClick={(e) => { e.preventDefault(); table.previousPage() }} />
                             </PaginationItem>
-                            {table.getPageOptions().map((page, index) => (
+                            {/* {table.getPageOptions().map((page, index) => (
                                 <PaginationItem key={index}>
                                     <PaginationLink
                                         href="#"
@@ -152,7 +156,7 @@ export function DataTable<TData, TValue>({ className, columns, data, create = tr
                                         {page + 1}
                                     </PaginationLink>
                                 </PaginationItem>
-                            ))}
+                            ))} */}
                             <PaginationItem>
                                 <PaginationNext href="#" onClick={(e) => { e.preventDefault(); table.nextPage() }} />
                             </PaginationItem>
